@@ -1,0 +1,7 @@
+module.exports = {
+  config: "./db/config.js",
+  // seederStorage: "sequelize",
+  "models-path": "./db/models/",
+  "migrations-path": "./db/migrations/",
+  "seeders-path": "./db/seeders/",
+};

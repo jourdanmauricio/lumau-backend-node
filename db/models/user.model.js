@@ -1,0 +1,89 @@
+const { Model, DataTypes, Sequelize } = require('sequelize');
+const bcrypt = require('bcrypt');
+const formatDate = require('../../utils/functions/formatDate');
+
+const USER_TABLE = 'users';
+
+const UserSchema = {
+  id: {
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true,
+    type: DataTypes.INTEGER,
+  },
+  email: { allowNull: false, type: DataTypes.STRING(250) },
+  password: { allowNull: false, type: DataTypes.STRING(50) },
+  name: { allowNull: false, type: DataTypes.STRING(200) },
+  url: { allowNull: false, type: DataTypes.STRING(100), unique: true },
+  phone: { allowNull: true, type: DataTypes.STRING(50) },
+  dni: { allowNull: true, type: DataTypes.STRING(50) },
+  deploy: { allowNull: false, type: DataTypes.STRING(50) },
+  attributes: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+    defaultValue: '[]',
+    get() {
+      return JSON.parse(this.getDataValue('attributes'));
+    },
+    set(value) {
+      this.setDataValue('attributes', JSON.stringify(value));
+    },
+  },
+  role: {
+    allowNull: false,
+    type: DataTypes.ENUM(['admin', 'user']),
+    defaultValue: 'user',
+  },
+  createdAt: {
+    allowNull: false,
+    type: DataTypes.DATE,
+    field: 'created_at',
+    defaultValue: Sequelize.NOW,
+    get: function () {
+      return formatDate(this.getDataValue('createdAt'));
+    },
+  },
+  updatedAt: {
+    allowNull: false,
+    type: DataTypes.DATE,
+    field: 'updated_at',
+    defaultValue: Sequelize.NOW,
+    get: function () {
+      return formatDate(this.getDataValue('updatedAt'));
+    },
+  },
+};
+
+class User extends Model {
+  static associate(models) {
+    this.hasMany(models.Subscriber, {
+      as: 'subscribers',
+      foreignKey: 'userId',
+    });
+    this.hasMany(models.Contact, {
+      as: 'contacts',
+      foreignKey: 'userId',
+    });
+  }
+  static config(sequelize) {
+    return {
+      sequelize,
+      tableName: USER_TABLE,
+      modelName: 'User',
+      timestamps: false,
+      hooks: {
+        beforeCreate: async (user) => {
+          const password = await bcrypt.hash(user.password, 10);
+          user.password = password;
+        },
+      },
+      defaultScope: {
+        attributes: { exclude: ['password'] },
+      },
+      scopes: {
+        withPassword: { attributes: {} },
+      },
+    };
+  }
+}
+module.exports = { USER_TABLE, UserSchema, User };
