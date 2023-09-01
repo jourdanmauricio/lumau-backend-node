@@ -1,4 +1,4 @@
-const { config } = require('./../config/config');
+// const { config } = require('./../config/config');
 
 // const USER = encodeURIComponent(config.dbUser);
 // const PASSWORD = encodeURIComponent(config.dbPassword);
@@ -15,11 +15,12 @@ module.exports = {
   //     dialect: 'postgres',
   //   },
   development: {
-    storage: `./db/${config.dbName}`,
+    // storage: `./db/${config.dbName}`,
+    storage: './db/lumau-db.sqlite',
     dialect: 'sqlite',
   },
   production: {
-    storage: `./db/${config.dbName}`,
+    storage: './db/lumau-db.sqlite',
     dialect: 'sqlite',
     dialectOptions: {
       ssl: {

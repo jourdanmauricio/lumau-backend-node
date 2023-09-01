@@ -17,6 +17,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use(cors());
 
 app.get('/v1', checkApiKey, (req, res) => {
   res.send('Hola mi server en express');
@@ -25,7 +26,6 @@ app.get('/v1', checkApiKey, (req, res) => {
 require('./utils/auth');
 
 app.use(passport.initialize());
-routerApi(app);
 
 // const whitelist = ['http://localhost:8080', 'https://myapp.com'];
 // const options = {
@@ -38,7 +38,9 @@ routerApi(app);
 //   },
 // };
 // app.use(cors(options));
-app.use(cors());
+
+
+routerApi(app);
 
 app.use(logErrors);
 app.use(ormErrorHandler);
