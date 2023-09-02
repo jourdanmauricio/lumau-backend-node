@@ -64,7 +64,12 @@ class User extends Model {
       as: 'contacts',
       foreignKey: 'userId',
     });
+    this.hasMany(models.Note, {
+      as: 'notes',
+      foreignKey: 'userId',
+    });
   }
+
   static config(sequelize) {
     return {
       sequelize,
