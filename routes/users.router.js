@@ -309,12 +309,19 @@ router.post(
 router.put(
   '/:id',
   passport.authenticate('jwt', { session: false }),
-  checkAdminRole,
+  // checkAdminRole,
   validatorHandler(getUserSchema, 'params'),
   validatorHandler(updateUserSchema, 'body'),
   async (req, res, next) => {
     try {
-      const { id } = req.params;
+      let id;
+      const jwtUser = req.user;
+      if (jwtUser.role === 'admin') {
+        id = req.params.id;
+      } else {
+        id = jwtUser.sub;
+      }
+      // const { id } = req.params;
       const body = req.body;
       const user = await userService.update(id, body);
       res.json(user);
@@ -389,5 +396,21 @@ router.delete(
     }
   },
 );
+
+// router.put(
+//   '/change-password/:id',
+//   passport.authenticate('jwt', { session: false }),
+//   validatorHandler(updatePassUserSchema, 'body'),
+//   async (req, res, next) => {
+//     try {
+//       const { id, newPassword } = req.body;
+
+//       const rta = await service.updatePass(id, newPassword);
+//       res.status(200).json(rta);
+//     } catch (error) {
+//       next(error);
+//     }
+//   },
+// );
 
 module.exports = router;
