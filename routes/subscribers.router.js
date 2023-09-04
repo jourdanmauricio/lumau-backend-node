@@ -41,14 +41,18 @@ router.get(
 router.post(
   '/',
   validatorHandler(createSubscriberSchema, 'body'),
-  async (req, res) => {
+  async (req, res, next) => {
     const body = req.body;
     const { url } = req.body;
-    const user = await userService.findByUrl(url);
-    body.userId = user.id;
+    try {
+      const user = await userService.findByUrl(url);
+      body.userId = user.id;
 
-    const subscriber = await subscriberService.create(body);
-    res.status(201).json(subscriber);
+      const subscriber = await subscriberService.create(body);
+      res.status(201).json(subscriber);
+    } catch (error) {
+      next(error);
+    }
   },
 );
 
