@@ -18,7 +18,8 @@ router.get(
   '/',
   passport.authenticate('jwt', { session: false }),
   async (req, res) => {
-    const subscribers = await subscriberService.find();
+    const sub = req.user;
+    const subscribers = await subscriberService.find(sub);
     res.json(subscribers);
   },
 );

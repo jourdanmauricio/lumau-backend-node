@@ -10,8 +10,10 @@ class SubscriberService {
     return newSubscriber;
   }
 
-  async find() {
-    const subscribers = await models.Subscriber.findAll();
+  async find(userId) {
+    const subscribers = await models.Subscriber.findAll({
+      where: { userId },
+    });
     return subscribers;
   }
 
