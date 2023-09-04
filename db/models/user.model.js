@@ -82,8 +82,10 @@ class User extends Model {
           user.password = password;
         },
         beforeUpdate: async (user) => {
-          const password = await bcrypt.hash(user.password, 10);
-          user.password = password;
+          if (user.password) {
+            const password = await bcrypt.hash(user.password, 10);
+            user.password = password;
+          }
         },
       },
       defaultScope: {

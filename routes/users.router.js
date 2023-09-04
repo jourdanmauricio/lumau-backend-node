@@ -387,9 +387,9 @@ router.delete(
   validatorHandler(getUserSchema, 'params'),
   async (req, res, next) => {
     try {
-      const { role } = req.user;
+      // const { role } = req.user;
       const { id } = req.params;
-      const rta = await userService.delete(id, role);
+      const rta = await userService.delete(id);
       res.json(rta);
     } catch (error) {
       next(error);

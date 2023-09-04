@@ -43,17 +43,18 @@ class UserService {
   }
 
   async update(id, changes) {
+    // console.log('update user', id);
     const user = await this.findOne(id);
     const rta = await user.update(changes);
     return rta;
   }
 
-  async delete(id, role) {
-    if (role === 'admin') {
+  async delete(id) {
+    const user = await this.findOne(id);
+    if (user.role === 'admin') {
       throw boom.unauthorized(`Can't delete admin user`);
     }
 
-    const user = await this.findOne(id);
     await user.destroy();
     return { id };
   }
