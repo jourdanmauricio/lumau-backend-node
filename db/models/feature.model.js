@@ -1,18 +1,32 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 const formatDate = require('../../utils/functions/formatDate');
 
-const NOTE_TABLE = 'notes';
+const FEATURE_TABLE = 'features';
 const { USER_TABLE } = require('./user.model');
 
-const NoteSchema = {
+const FeatureSchema = {
   id: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
     type: DataTypes.INTEGER,
   },
-  name: { allowNull: false, type: DataTypes.STRING(250) },
-  value: { allowNull: false, type: DataTypes.TEXT },
+  name: { allowNull: false, type: DataTypes.STRING(200) },
+  value: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+    defaultValue: '[]',
+    get() {
+      return JSON.parse(this.getDataValue('value'));
+    },
+    set(value) {
+      this.setDataValue('value', JSON.stringify(value));
+    },
+  },
+  description: {
+    allowNull: true,
+    type: DataTypes.STRING(255),
+  },
   userId: {
     field: 'user_id',
     allowNull: false,
@@ -41,7 +55,7 @@ const NoteSchema = {
   },
 };
 
-class Note extends Model {
+class Feature extends Model {
   static associate(models) {
     this.belongsTo(models.User, {
       as: 'user',
@@ -51,14 +65,11 @@ class Note extends Model {
   static config(sequelize) {
     return {
       sequelize,
-      tableName: NOTE_TABLE,
-      modelName: 'Note',
+      tableName: FEATURE_TABLE,
+      modelName: 'Feature',
       timestamps: false,
-      defaultScope: {
-        attributes: { exclude: ['createdAt', 'updatedAt', 'userId'] },
-      },
     };
   }
 }
 
-module.exports = { NOTE_TABLE, NoteSchema, Note };
+module.exports = { FEATURE_TABLE, FeatureSchema, Feature };

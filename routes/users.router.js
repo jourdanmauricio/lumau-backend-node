@@ -233,6 +233,7 @@ router.get(
 router.post(
   '/',
   passport.authenticate('jwt', { session: false }),
+  checkAdminRole,
   validatorHandler(createUserSchema, 'body'),
   async (req, res, next) => {
     try {
@@ -396,21 +397,5 @@ router.delete(
     }
   },
 );
-
-// router.put(
-//   '/change-password/:id',
-//   passport.authenticate('jwt', { session: false }),
-//   validatorHandler(updatePassUserSchema, 'body'),
-//   async (req, res, next) => {
-//     try {
-//       const { id, newPassword } = req.body;
-
-//       const rta = await service.updatePass(id, newPassword);
-//       res.status(200).json(rta);
-//     } catch (error) {
-//       next(error);
-//     }
-//   },
-// );
 
 module.exports = router;

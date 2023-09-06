@@ -18,7 +18,7 @@ const SubscriberSchema = {
     type: DataTypes.INTEGER,
     references: { model: USER_TABLE, key: 'id' },
     onUpdate: 'CASCADE',
-    onDelete: 'SET NULL',
+    onDelete: 'CASCADE',
   },
   createdAt: {
     allowNull: false,

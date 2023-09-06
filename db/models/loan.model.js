@@ -1,18 +1,20 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 const formatDate = require('../../utils/functions/formatDate');
 
-const NOTE_TABLE = 'notes';
+const LOAN_TABLE = 'loans';
 const { USER_TABLE } = require('./user.model');
 
-const NoteSchema = {
+const LoanSchema = {
   id: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
     type: DataTypes.INTEGER,
   },
-  name: { allowNull: false, type: DataTypes.STRING(250) },
-  value: { allowNull: false, type: DataTypes.TEXT },
+  type: { allowNull: false, type: DataTypes.STRING(100) },
+  maxQuantityQuotes: { allowNull: false, type: DataTypes.INTEGER },
+  maxAmount: { allowNull: false, type: DataTypes.DOUBLE },
+  rate: { allowNull: false, type: DataTypes.DOUBLE },
   userId: {
     field: 'user_id',
     allowNull: false,
@@ -41,7 +43,7 @@ const NoteSchema = {
   },
 };
 
-class Note extends Model {
+class Loan extends Model {
   static associate(models) {
     this.belongsTo(models.User, {
       as: 'user',
@@ -51,8 +53,8 @@ class Note extends Model {
   static config(sequelize) {
     return {
       sequelize,
-      tableName: NOTE_TABLE,
-      modelName: 'Note',
+      tableName: LOAN_TABLE,
+      modelName: 'Loan',
       timestamps: false,
       defaultScope: {
         attributes: { exclude: ['createdAt', 'updatedAt', 'userId'] },
@@ -61,4 +63,4 @@ class Note extends Model {
   }
 }
 
-module.exports = { NOTE_TABLE, NoteSchema, Note };
+module.exports = { LOAN_TABLE, LoanSchema, Loan };

@@ -68,6 +68,14 @@ class User extends Model {
       as: 'notes',
       foreignKey: 'userId',
     });
+    this.hasMany(models.Feature, {
+      as: 'features',
+      foreignKey: 'userId',
+    });
+    this.hasMany(models.Loan, {
+      as: 'loans',
+      foreignKey: 'userId',
+    });
   }
 
   static config(sequelize) {

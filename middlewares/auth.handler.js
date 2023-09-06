@@ -30,4 +30,16 @@ function checkRoles(...roles) {
   };
 }
 
-module.exports = { checkApiKey, checkAdminRole, checkRoles };
+function checkAuthRoute(feature) {
+  return (req, res, next) => {
+    const user = req.user;
+    console.log('User', user);
+    if (user.attributes.includes(feature) || user.role === 'admin') {
+      next();
+    } else {
+      next(boom.unauthorized());
+    }
+  };
+}
+
+module.exports = { checkApiKey, checkAdminRole, checkRoles, checkAuthRoute };
