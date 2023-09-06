@@ -13,18 +13,13 @@ const loanService = new LoanService();
 
 const router = express.Router();
 
-router.get(
-  '/',
-  passport.authenticate('jwt', { session: false }),
-  async (req, res) => {
-    const loans = await loanService.find();
-    res.json(loans);
-  },
-);
+router.get('/', async (req, res) => {
+  const loans = await loanService.find();
+  res.json(loans);
+});
 
 router.get(
   '/:id',
-  passport.authenticate('jwt', { session: false }),
   validatorHandler(getLoanSchema, 'params'),
   async (req, res, next) => {
     try {
