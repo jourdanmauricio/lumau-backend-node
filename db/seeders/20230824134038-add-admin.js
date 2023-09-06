@@ -17,7 +17,8 @@ module.exports = {
           phone: config.adminPhone,
           dni: config.adminDni,
           deploy: config.adminDeploy,
-          attributes: '["contact", "subscriber", "post"]',
+          attributes:
+            '["Perfil", "Dashboard", "Usuarios", "Contactos", "Suscriptores", "Préstamos"]',
           role: config.adminRole,
           created_at: new Date(),
           updated_at: new Date(),
