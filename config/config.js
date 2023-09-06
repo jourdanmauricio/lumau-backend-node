@@ -22,6 +22,7 @@ const config = {
   adminDni: process.env.ADMIN_DNI,
   adminDeploy: process.env.ADMIN_DEPLOY,
   adminRole: process.env.ADMIN_ROLE,
+  adminAttributes: process.env.ADMIN_ATTRIBUTES,
 
   mailerEmail: process.env.MAILER_EMAIL,
   mailerPassword: process.env.MAILER_PASSWORD,
