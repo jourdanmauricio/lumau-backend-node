@@ -4,7 +4,7 @@ const id = Joi.number();
 const name = Joi.string().max(200);
 const email = Joi.string().min(3).max(250);
 // const userId = Joi.number();
-const url = Joi.string().uri();
+const url = Joi.string().max(255);
 
 const createSubscriberSchema = Joi.object({
   name: name,
