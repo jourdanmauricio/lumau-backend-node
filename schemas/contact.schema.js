@@ -5,7 +5,7 @@ const name = Joi.string().max(200);
 const email = Joi.string().min(3).max(250);
 const phone = Joi.string().max(50);
 const comment = Joi.string();
-const url = Joi.string().uri();
+const url = Joi.string();
 
 const createContactSchema = Joi.object({
   name: name,
