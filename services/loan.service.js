@@ -1,6 +1,8 @@
 const boom = require('@hapi/boom');
 
 const { models } = require('../libs/sequelize');
+const UserService = require('../services/user.service');
+const userService = new UserService();
 
 class LoanService {
   constructor() {}
@@ -10,7 +12,14 @@ class LoanService {
     return newLoan;
   }
 
-  async find() {
+  async find(url = '') {
+    const user = await userService.findByUrl(url);
+
+    let position = user.dataValues.attributes.search(/Préstamos/);
+
+    if (position === -1) {
+      throw boom.unauthorized('web not found');
+    }
     const loans = await models.Loan.findAll();
     return loans;
   }

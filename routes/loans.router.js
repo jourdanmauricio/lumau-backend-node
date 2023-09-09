@@ -8,14 +8,21 @@ const {
   updateLoanSchema,
   getLoanSchema,
 } = require('../schemas/loan.schema');
+
 const LoanService = require('../services/loan.service');
 const loanService = new LoanService();
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-  const loans = await loanService.find();
-  res.json(loans);
+router.get('/', async (req, res, next) => {
+  try {
+    const url = req.headers['url'];
+
+    const loans = await loanService.find(url);
+    res.json(loans);
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.get(

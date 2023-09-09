@@ -42,4 +42,9 @@ function checkAuthRoute(feature) {
   };
 }
 
-module.exports = { checkApiKey, checkAdminRole, checkRoles, checkAuthRoute };
+module.exports = {
+  checkApiKey,
+  checkAdminRole,
+  checkRoles,
+  checkAuthRoute,
+};
