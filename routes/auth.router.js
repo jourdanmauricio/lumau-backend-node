@@ -94,5 +94,19 @@ router.post('/change-password', async (req, res, next) => {
   }
 });
 
+router.post(
+  '/regenerate-page',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res, next) => {
+    try {
+      const { repo } = req.body;
+      await authService.regeneratePage(repo);
+
+      res.status(200).json({ status: 200, message: 'OK' });
+    } catch (error) {
+      next(error);
+    }
+  },
+);
 module.exports = router;
 module.exports = router;

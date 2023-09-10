@@ -24,6 +24,10 @@ const config = {
   adminRole: process.env.ADMIN_ROLE,
   adminAttributes: process.env.ADMIN_ATTRIBUTES,
 
+  adminGithubToken: process.env.ADMIN_GITHUB_TOKEN,
+  adminGithub: process.env.ADMIN_GITHUB,
+  githubUrl: process.env.GITHUB_URL,
+
   mailerEmail: process.env.MAILER_EMAIL,
   mailerPassword: process.env.MAILER_PASSWORD,
 

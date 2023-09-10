@@ -2,6 +2,7 @@ const boom = require('@hapi/boom');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
+const fetch = require('node-fetch');
 
 const { config } = require('../config/config');
 
@@ -118,6 +119,27 @@ class AuthService {
     } catch (error) {
       throw boom.unauthorized();
     }
+  }
+
+  async regeneratePage(repo) {
+    const data = {
+      event_type: 'run-deploy',
+    };
+    const url = `${config.githubUrl}/${config.adminGithub}/${repo}/dispatches`;
+    const options = {
+      method: 'POST',
+      headers: {
+        Accept: 'application/vnd.github.everest-preview+json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${config.adminGithubToken}`,
+      },
+      body: JSON.stringify(data),
+    };
+
+    const resp = await fetch(url, options);
+
+    if (resp.status !== 204) throw boom.conflict('Error regenerando la página');
+    return resp;
   }
 }
 
