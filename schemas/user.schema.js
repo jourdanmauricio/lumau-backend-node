@@ -11,10 +11,10 @@ const dni = Joi.string().allow('').min(8);
 const deploy = Joi.string().min(3).max(50);
 const role = Joi.string().max(10);
 const username = Joi.string().max(255);
-const cloudName = Joi.string().max(100);
-const cloudFolder = Joi.string().max(100);
-const cloudApiKey = Joi.string().max(100);
-const cloudPreset = Joi.string().max(100);
+const cloudName = Joi.string().allow('').max(100);
+const cloudFolder = Joi.string().allow('').max(100);
+const cloudApiKey = Joi.string().allow('').max(100);
+const cloudPreset = Joi.string().allow('').max(100);
 
 const createUserSchema = Joi.object({
   name: name.required(),
