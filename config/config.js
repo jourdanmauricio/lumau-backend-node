@@ -23,6 +23,7 @@ const config = {
   adminDeploy: process.env.ADMIN_DEPLOY,
   adminRole: process.env.ADMIN_ROLE,
   adminAttributes: process.env.ADMIN_ATTRIBUTES,
+  username: process.env.ADMIN_USERNAME,
 
   adminGithubToken: process.env.ADMIN_GITHUB_TOKEN,
   adminGithub: process.env.ADMIN_GITHUB,

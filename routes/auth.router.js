@@ -62,6 +62,10 @@ router.post(
         sub: user.id,
         role: user.role,
         attributes: user.attributes,
+        cloudName: user.cloudName,
+        clodFolder: user.clodFolder,
+        cloudApiKey: user.cloudApiKey,
+        cloudPreset: user.cloudPreset,
       };
       const token = jwt.sign(payload, config.jwtSecret);
       res.json({

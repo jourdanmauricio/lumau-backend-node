@@ -4,6 +4,8 @@ const { Contact, ContactSchema } = require('./contact.model');
 const { Note, NoteSchema } = require('./note.model');
 const { Feature, FeatureSchema } = require('./feature.model');
 const { Loan, LoanSchema } = require('./loan.model');
+const { Service, ServiceSchema } = require('./service.model');
+const { Image, ImageSchema } = require('./image.model');
 
 function setupModels(sequelize) {
   User.init(UserSchema, User.config(sequelize));
@@ -12,6 +14,8 @@ function setupModels(sequelize) {
   Note.init(NoteSchema, Note.config(sequelize));
   Feature.init(FeatureSchema, Feature.config(sequelize));
   Loan.init(LoanSchema, Loan.config(sequelize));
+  Service.init(ServiceSchema, Service.config(sequelize));
+  Image.init(ImageSchema, Image.config(sequelize));
 
   User.associate(sequelize.models);
   Subscriber.associate(sequelize.models);
@@ -19,5 +23,7 @@ function setupModels(sequelize) {
   Note.associate(sequelize.models);
   Feature.associate(sequelize.models);
   Loan.associate(sequelize.models);
+  Service.associate(sequelize.models);
+  Image.associate(sequelize.models);
 }
 module.exports = setupModels;

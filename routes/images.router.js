@@ -4,13 +4,13 @@ const passport = require('passport');
 const validatorHandler = require('../middlewares/validator.handler');
 const { checkAuthRoute } = require('./../middlewares/auth.handler');
 const {
-  createLoanSchema,
-  updateLoanSchema,
-  getLoanSchema,
-} = require('../schemas/loan.schema');
+  createImageSchema,
+  updateImageSchema,
+  getImageSchema,
+} = require('../schemas/image.schema');
 
-const LoanService = require('../services/loan.service');
-const loanService = new LoanService();
+const ImageService = require('../services/image.service');
+const imageService = new ImageService();
 
 const router = express.Router();
 
@@ -18,8 +18,8 @@ router.get('/', async (req, res, next) => {
   try {
     const url = req.headers['url'];
 
-    const loans = await loanService.find(url);
-    res.json(loans);
+    const images = await imageService.find(url);
+    res.json(images);
   } catch (error) {
     next(error);
   }
@@ -27,12 +27,12 @@ router.get('/', async (req, res, next) => {
 
 router.get(
   '/:id',
-  validatorHandler(getLoanSchema, 'params'),
+  validatorHandler(getImageSchema, 'params'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
-      const loan = await loanService.findOne(id);
-      res.json(loan);
+      const image = await imageService.findOne(id);
+      res.json(image);
     } catch (error) {
       next(error);
     }
@@ -42,7 +42,7 @@ router.get(
 router.post(
   '/',
   passport.authenticate('jwt', { session: false }),
-  validatorHandler(createLoanSchema, 'body'),
+  validatorHandler(createImageSchema, 'body'),
   checkAuthRoute('Préstamos'),
   async (req, res, next) => {
     try {
@@ -50,8 +50,8 @@ router.post(
       const { sub } = req.user;
       body.userId = sub;
 
-      const loan = await loanService.create(body);
-      res.status(201).json(loan);
+      const image = await imageService.create(body);
+      res.status(201).json(image);
     } catch (error) {
       next(error);
     }
@@ -61,15 +61,15 @@ router.post(
 router.put(
   '/:id',
   passport.authenticate('jwt', { session: false }),
-  validatorHandler(getLoanSchema, 'params'),
-  validatorHandler(updateLoanSchema, 'body'),
-  checkAuthRoute('Préstamos'),
+  validatorHandler(getImageSchema, 'params'),
+  validatorHandler(updateImageSchema, 'body'),
+  checkAuthRoute('Imágenes'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
       const body = req.body;
-      const loan = await loanService.update(id, body);
-      res.json(loan);
+      const image = await imageService.update(id, body);
+      res.json(image);
     } catch (error) {
       next(error);
     }
@@ -79,12 +79,12 @@ router.put(
 router.delete(
   '/:id',
   passport.authenticate('jwt', { session: false }),
-  validatorHandler(getLoanSchema, 'params'),
-  checkAuthRoute('Préstamos'),
+  validatorHandler(getImageSchema, 'params'),
+  checkAuthRoute('Imágenes'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
-      const rta = await loanService.delete(id);
+      const rta = await imageService.delete(id);
       res.json(rta);
     } catch (error) {
       next(error);

@@ -25,16 +25,22 @@ class UserService {
   }
 
   async findByUrl(url) {
-    // const query = 'SELECT * FROM task';
-    // const [data] = await sequelize.query(query);
-    // return data;
     const user = await models.User.scope('withPassword').findOne({
       where: { url },
     });
     if (!user) {
       throw boom.notFound('web not found');
     }
+    return user;
+  }
 
+  async findByUsername(username) {
+    const user = await models.User.scope('withPassword').findOne({
+      where: { username },
+    });
+    if (!user) {
+      throw boom.notFound('user not found');
+    }
     return user;
   }
 

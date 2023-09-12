@@ -3,11 +3,12 @@ const boom = require('@hapi/boom');
 const bcrypt = require('bcrypt');
 const UserService = require('../../../services/user.service');
 const service = new UserService();
+
 const LocalStrategy = new Strategy(
-  { usernameField: 'url', passwordField: 'password' },
-  async (url, password, done) => {
+  { usernameField: 'username', passwordField: 'password' },
+  async (username, password, done) => {
     try {
-      const user = await service.findByUrl(url);
+      const user = await service.findByUsername(username);
       if (!user) {
         done(boom.unauthorized(), false);
       }

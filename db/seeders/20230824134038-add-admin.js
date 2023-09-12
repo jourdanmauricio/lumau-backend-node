@@ -19,6 +19,7 @@ module.exports = {
           deploy: config.adminDeploy,
           attributes: config.adminAttributes,
           role: config.adminRole,
+          username: config.username,
           created_at: new Date(),
           updated_at: new Date(),
         },

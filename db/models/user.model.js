@@ -11,13 +11,34 @@ const UserSchema = {
     primaryKey: true,
     type: DataTypes.INTEGER,
   },
-  email: { allowNull: false, type: DataTypes.STRING(250) },
+  email: { allowNull: false, type: DataTypes.STRING(255) },
   password: { allowNull: false, type: DataTypes.STRING(50) },
   name: { allowNull: false, type: DataTypes.STRING(200) },
-  url: { allowNull: false, type: DataTypes.STRING(100), unique: true },
+  username: { allowNull: false, type: DataTypes.STRING(255), unique: true },
+  url: { allowNull: false, type: DataTypes.STRING(255), unique: true },
   phone: { allowNull: true, type: DataTypes.STRING(50) },
   dni: { allowNull: true, type: DataTypes.STRING(50) },
   deploy: { allowNull: false, type: DataTypes.STRING(50) },
+  cloudName: {
+    field: 'cloud_name',
+    allowNull: true,
+    type: DataTypes.STRING(100),
+  },
+  cloudFolder: {
+    field: 'cloud_folder',
+    allowNull: true,
+    type: DataTypes.STRING(100),
+  },
+  cloudApiKey: {
+    field: 'cloud_api_key',
+    allowNull: true,
+    type: DataTypes.STRING(100),
+  },
+  cloudPreset: {
+    field: 'cloud_preset',
+    allowNull: true,
+    type: DataTypes.STRING(100),
+  },
   attributes: {
     type: DataTypes.TEXT,
     allowNull: true,
@@ -74,6 +95,14 @@ class User extends Model {
     });
     this.hasMany(models.Loan, {
       as: 'loans',
+      foreignKey: 'userId',
+    });
+    this.hasMany(models.Service, {
+      as: 'services',
+      foreignKey: 'userId',
+    });
+    this.hasMany(models.Image, {
+      as: 'images',
       foreignKey: 'userId',
     });
   }
