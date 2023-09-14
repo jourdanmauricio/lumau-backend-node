@@ -6,6 +6,7 @@ const { Feature, FeatureSchema } = require('./feature.model');
 const { Loan, LoanSchema } = require('./loan.model');
 const { Service, ServiceSchema } = require('./service.model');
 const { Image, ImageSchema } = require('./image.model');
+const { Section, SectionSchema } = require('./section.model');
 
 function setupModels(sequelize) {
   User.init(UserSchema, User.config(sequelize));
@@ -16,6 +17,7 @@ function setupModels(sequelize) {
   Loan.init(LoanSchema, Loan.config(sequelize));
   Service.init(ServiceSchema, Service.config(sequelize));
   Image.init(ImageSchema, Image.config(sequelize));
+  Section.init(SectionSchema, Section.config(sequelize));
 
   User.associate(sequelize.models);
   Subscriber.associate(sequelize.models);
