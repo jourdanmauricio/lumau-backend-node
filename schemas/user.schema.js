@@ -5,6 +5,7 @@ const name = Joi.string().min(3).max(150);
 const attributes = Joi.array();
 const email = Joi.string().min(3).max(250);
 const password = Joi.string().min(8);
+const recoveryToken = Joi.string().allow('').max(250);
 const url = Joi.string().min(3).max(250);
 const phone = Joi.string().allow('').max(50);
 const dni = Joi.string().allow('').min(8);
@@ -38,6 +39,7 @@ const updateUserSchema = Joi.object({
   attributes,
   email,
   password,
+  recoveryToken,
   url,
   phone,
   dni,

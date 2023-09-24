@@ -7,11 +7,11 @@ const fetch = require('node-fetch');
 const { config } = require('../config/config');
 
 const UserService = require('./user.service');
-const service = new UserService();
+const userService = new UserService();
 
 class AuthService {
   async getUser(email, password) {
-    const user = await service.findByEmail(email);
+    const user = await userService.findByEmail(email);
     if (!user) {
       throw boom.unauthorized();
     }
@@ -38,8 +38,9 @@ class AuthService {
     };
   }
 
-  async sendRecovery(email) {
-    const user = await service.findByEmail(email);
+  async sendRecovery(username) {
+    const user = await userService.findByUsername(username);
+
     if (!user) {
       throw boom.unauthorized();
     }
@@ -49,10 +50,12 @@ class AuthService {
       expiresIn: '15min',
     });
     const link = `${config.adminFrontEnd}/recovery-password?token=${token}`;
-    await service.update(user.id, { recovery_token: token });
+    await userService.update(user.id, {
+      recoveryToken: token,
+    });
 
     const mail = {
-      from: `"Foo Boo 👻" <${config.mailerEmail}>`,
+      from: `${config.emailSend}`,
       to: `${user.email}`,
       subject: 'Email para recuperar contraseña 👌',
       html: `
@@ -90,8 +93,8 @@ class AuthService {
       secure: true, // true for 465, false for other ports
       port: 465,
       auth: {
-        user: config.mailerEmail,
-        pass: config.mailerPassword,
+        user: config.emailSend,
+        pass: config.emailSendPass,
       },
     });
 
@@ -102,16 +105,16 @@ class AuthService {
   async changePassword(token, password) {
     try {
       const payload = jwt.verify(token, config.jwtSecret);
-      const user = await service.findOne(payload.sub);
+      const user = await userService.findOne(payload.sub);
 
-      if (user.recovery_token !== token) {
+      if (user.recoveryToken !== token) {
         throw boom.unauthorized();
       }
 
       const hash = await bcrypt.hash(password, 10);
 
-      await service.update(user.id, {
-        recovery_token: null,
+      await userService.update(user.id, {
+        recoveryToken: null,
         password: hash,
       });
 

@@ -80,8 +80,8 @@ router.post(
 
 router.post('/recovery', async (req, res, next) => {
   try {
-    const { email } = req.body;
-    const rta = await authService.sendRecovery(email);
+    const { username } = req.body;
+    const rta = await authService.sendRecovery(username);
     res.status(200).json(rta);
   } catch (error) {
     next(error);

@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const config = {
   env: process.env.NODE_ENV || 'dev',
+  adminFrontEnd: process.env.ADMIN_FRONTEND,
   backendDomain: process.env.BACKEND_DOMAIN,
   port: process.env.PORT || 3000,
   dbUser: process.env.DB_USER,
@@ -29,8 +30,8 @@ const config = {
   adminGithub: process.env.ADMIN_GITHUB,
   githubUrl: process.env.GITHUB_URL,
 
-  mailerEmail: process.env.MAILER_EMAIL,
-  mailerPassword: process.env.MAILER_PASSWORD,
+  // mailerEmail: process.env.MAILER_EMAIL,
+  // mailerPassword: process.env.MAILER_PASSWORD,
 
   emailSend: process.env.EMAIL_SEND,
   emailSendPass: process.env.EMAIL_SEND_PASS,
