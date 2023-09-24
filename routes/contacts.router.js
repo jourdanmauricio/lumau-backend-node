@@ -48,6 +48,7 @@ router.post(
     const { url } = req.body;
     const user = await userService.findByUrl(url);
     body.userId = user.id;
+    body.email = user.email;
     const newContact = await contactService.create(body);
     res.status(201).json(newContact);
   },
