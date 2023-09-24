@@ -12,7 +12,8 @@ const transporter = nodemailer.createTransport({
 });
 
 transporter.verify().then(() => {
-  // console.log('Ready for send emails');
+  // eslint-disable-next-line no-console
+  console.log('Ready for send emails');
 });
 
 module.exports = { transporter };
