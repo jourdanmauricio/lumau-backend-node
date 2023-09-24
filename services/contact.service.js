@@ -10,17 +10,15 @@ class ContactService {
   async create(data) {
     const newContact = await models.Contact.create(data);
 
-    console.log('SEND EMAIL', data.email);
-
     // Send email
     await transporter.sendMail({
       from: `"Formulario de Contacto 👻" <${config.emailSend}>`,
       // to: config.emailTo,
       to: data.email,
-      subject: 'Nuevo Mesanje en Hatha Yoga ✔',
+      subject: `Nuevo Mesanje de contacto recibido en ${data.url} ✔`,
       html: `
         <h2 style='text-align: center;'>Tienes un nuevo mensaje de contacto!</h2>
-        <div style='border: 1px solid #5a5959; padding: 10px; border-radius: 0.25rem; display: inline-block; max-width: 80%; margin: 0 auto;'>
+        <div style='border: 1px solid #5a5959; padding: 10px; border-radius: 0.25rem; display: inline-block; max-width: 80%; margin: 0 auto; display: flex; justify-content:center;'>
           <div style='display: grid; grid-template-columns: 100px 1 fr;'>
             <p>Nombre: ${newContact.name}</p>
             <hr>
