@@ -10,6 +10,8 @@ class ContactService {
   async create(data) {
     const newContact = await models.Contact.create(data);
 
+    console.log('SEND EMAIL', data.email);
+
     // Send email
     await transporter.sendMail({
       from: `"Formulario de Contacto 👻" <${config.emailSend}>`,
