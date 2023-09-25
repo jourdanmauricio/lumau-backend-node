@@ -4,7 +4,7 @@ const { config } = require('./config');
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   port: config.emailPort,
-  secure: true, // true for 465, false for other ports
+  secure: config.emailSecure, // true for 465, false for other ports
   auth: {
     user: config.emailSend, // generated ethereal user
     pass: config.emailSendPass, // generated ethereal password

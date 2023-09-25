@@ -35,6 +35,7 @@ const config = {
 
   emailSend: process.env.EMAIL_SEND,
   emailPort: process.env.EMAIL_PORT,
+  emailSecure: process.env.EMAIL_SECURE,
   emailSendPass: process.env.EMAIL_SEND_PASS,
   emailTo: process.env.EMAIL_TO,
 };
