@@ -13,7 +13,7 @@ class SubscriberService {
     // Send email
     await transporter.sendMail({
       from: `"Formulario de suscripción 👻" <${config.emailSend}>`,
-      to: data.email,
+      to: data.emailTo,
       subject: `Nuevo Suscriptor en ${data.url} ✔`,
       html: `
       <h2 style='text-align: center;'>Tienes un nuevo suscriptor!</h2>
