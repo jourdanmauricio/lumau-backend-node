@@ -1,4 +1,6 @@
 const boom = require('@hapi/boom');
+const { config } = require('../config/config');
+const { transporter } = require('../config/mailer');
 
 const { models } = require('../libs/sequelize');
 
@@ -7,6 +9,19 @@ class SubscriberService {
 
   async create(data) {
     const newSubscriber = await models.Subscriber.create(data);
+
+    // Send email
+    await transporter.sendMail({
+      from: `"Formulario de suscripción 👻" <${config.emailSend}>`,
+      to: data.email,
+      subject: `Nuevo Suscriptor en ${data.url} ✔`,
+      html: `
+      <h2 style='text-align: center;'>Tienes un nuevo suscriptor!</h2>
+      <p>Nombre: ${newSubscriber.name}</p>
+      <p>Email: ${newSubscriber.email}</p>
+      `,
+    });
+
     return newSubscriber;
   }
 

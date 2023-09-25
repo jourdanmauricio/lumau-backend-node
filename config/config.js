@@ -34,6 +34,7 @@ const config = {
   // mailerPassword: process.env.MAILER_PASSWORD,
 
   emailSend: process.env.EMAIL_SEND,
+  emailPort: process.env.EMAIL_PORT,
   emailSendPass: process.env.EMAIL_SEND_PASS,
   emailTo: process.env.EMAIL_TO,
 };

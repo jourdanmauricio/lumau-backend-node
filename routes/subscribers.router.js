@@ -47,6 +47,7 @@ router.post(
     const { url } = req.body;
     try {
       const user = await userService.findByUrl(url);
+      body.email = user.email;
       body.userId = user.id;
 
       const subscriber = await subscriberService.create(body);
