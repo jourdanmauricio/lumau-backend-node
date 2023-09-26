@@ -24,6 +24,7 @@ const UserSchema = {
   phone: { allowNull: true, type: DataTypes.STRING(50) },
   dni: { allowNull: true, type: DataTypes.STRING(50) },
   deploy: { allowNull: false, type: DataTypes.STRING(50) },
+  repo: { allowNull: true, type: DataTypes.STRING(255) },
   cloudName: {
     field: 'cloud_name',
     allowNull: true,
@@ -108,6 +109,10 @@ class User extends Model {
     });
     this.hasMany(models.Image, {
       as: 'images',
+      foreignKey: 'userId',
+    });
+    this.hasMany(models.Office, {
+      as: 'offices',
       foreignKey: 'userId',
     });
   }

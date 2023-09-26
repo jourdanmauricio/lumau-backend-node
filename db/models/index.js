@@ -7,6 +7,7 @@ const { Loan, LoanSchema } = require('./loan.model');
 const { Service, ServiceSchema } = require('./service.model');
 const { Image, ImageSchema } = require('./image.model');
 const { Section, SectionSchema } = require('./section.model');
+const { Office, OfficeSchema } = require('./office.model');
 
 function setupModels(sequelize) {
   User.init(UserSchema, User.config(sequelize));
@@ -18,6 +19,7 @@ function setupModels(sequelize) {
   Service.init(ServiceSchema, Service.config(sequelize));
   Image.init(ImageSchema, Image.config(sequelize));
   Section.init(SectionSchema, Section.config(sequelize));
+  Office.init(OfficeSchema, Office.config(sequelize));
 
   User.associate(sequelize.models);
   Subscriber.associate(sequelize.models);
@@ -27,5 +29,6 @@ function setupModels(sequelize) {
   Loan.associate(sequelize.models);
   Service.associate(sequelize.models);
   Image.associate(sequelize.models);
+  Office.associate(sequelize.models);
 }
 module.exports = setupModels;

@@ -10,6 +10,7 @@ const loansRouter = require('./loans.router');
 const servicesRouter = require('./services.router');
 const imagesRouter = require('./images.router');
 const sectionsRouter = require('./sections.router');
+const officesRouter = require('./offices.router');
 
 function routerApi(app) {
   const router = express.Router();
@@ -24,5 +25,6 @@ function routerApi(app) {
   router.use('/services', servicesRouter);
   router.use('/images', imagesRouter);
   router.use('/sections', sectionsRouter);
+  router.use('/offices', officesRouter);
 }
 module.exports = routerApi;
