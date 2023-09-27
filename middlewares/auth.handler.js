@@ -33,7 +33,6 @@ function checkRoles(...roles) {
 function checkAuthRoute(feature) {
   return (req, res, next) => {
     const user = req.user;
-    console.log('User', user);
     if (user.attributes.includes(feature) || user.role === 'admin') {
       next();
     } else {

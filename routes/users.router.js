@@ -10,6 +10,8 @@ const {
 } = require('./../schemas/user.schema');
 const UserService = require('./../services/user.service');
 const userService = new UserService();
+const NetworkService = require('./../services/network.service');
+const networkService = new NetworkService();
 
 const router = express.Router();
 
@@ -239,6 +241,8 @@ router.post(
     try {
       const body = req.body;
       const user = await userService.create(body);
+      const networks = await networkService.create({ userId: user.id });
+      console.log('networks', networks);
       res.status(201).json(user);
     } catch (error) {
       next(error);

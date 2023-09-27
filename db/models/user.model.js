@@ -115,6 +115,10 @@ class User extends Model {
       as: 'offices',
       foreignKey: 'userId',
     });
+    this.hasMany(models.Network, {
+      as: 'networks',
+      foreignKey: 'userId',
+    });
   }
 
   static config(sequelize) {
