@@ -127,7 +127,6 @@ router.get(
  *    security:
  *      - bearerAuth: []
  */
-
 router.get(
   '/:id',
   passport.authenticate('jwt', { session: false }),

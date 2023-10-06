@@ -12,6 +12,7 @@ const imagesRouter = require('./images.router');
 const sectionsRouter = require('./sections.router');
 const officesRouter = require('./offices.router');
 const networksRouter = require('./networks.router');
+const postsRouter = require('./posts.router');
 
 function routerApi(app) {
   const router = express.Router();
@@ -28,5 +29,6 @@ function routerApi(app) {
   router.use('/sections', sectionsRouter);
   router.use('/offices', officesRouter);
   router.use('/networks', networksRouter);
+  router.use('/posts', postsRouter);
 }
 module.exports = routerApi;

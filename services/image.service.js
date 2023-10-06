@@ -17,7 +17,7 @@ class ImageService {
     if (position === -1) {
       throw boom.unauthorized('web not found');
     }
-    const images = await models.Image.findAll();
+    const images = await models.Image.findAll({ where: { userId: user.id } });
     return images;
   }
 

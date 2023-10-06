@@ -13,9 +13,10 @@ class NetworkService {
   async find(url = '') {
     const user = await userService.findByUrl(url);
 
-    const networks = await models.Network.findAll({
+    let networks = await models.Network.findAll({
       where: { userId: user.id },
     });
+
     return networks;
   }
 

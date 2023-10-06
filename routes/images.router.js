@@ -43,7 +43,7 @@ router.post(
   '/',
   passport.authenticate('jwt', { session: false }),
   validatorHandler(createImageSchema, 'body'),
-  checkAuthRoute('Préstamos'),
+  checkAuthRoute('Imágenes'),
   async (req, res, next) => {
     try {
       const body = req.body;

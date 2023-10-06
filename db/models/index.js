@@ -9,6 +9,7 @@ const { Image, ImageSchema } = require('./image.model');
 const { Section, SectionSchema } = require('./section.model');
 const { Office, OfficeSchema } = require('./office.model');
 const { Network, NetworkSchema } = require('./network.model');
+const { Post, PostSchema } = require('./post.model');
 
 function setupModels(sequelize) {
   User.init(UserSchema, User.config(sequelize));
@@ -22,6 +23,7 @@ function setupModels(sequelize) {
   Section.init(SectionSchema, Section.config(sequelize));
   Office.init(OfficeSchema, Office.config(sequelize));
   Network.init(NetworkSchema, Network.config(sequelize));
+  Post.init(PostSchema, Post.config(sequelize));
 
   User.associate(sequelize.models);
   Subscriber.associate(sequelize.models);
@@ -33,5 +35,6 @@ function setupModels(sequelize) {
   Image.associate(sequelize.models);
   Office.associate(sequelize.models);
   Network.associate(sequelize.models);
+  Post.associate(sequelize.models);
 }
 module.exports = setupModels;
