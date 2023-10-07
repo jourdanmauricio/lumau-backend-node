@@ -13,6 +13,7 @@ const sectionsRouter = require('./sections.router');
 const officesRouter = require('./offices.router');
 const networksRouter = require('./networks.router');
 const postsRouter = require('./posts.router');
+const lessonsRouter = require('./lessons.router');
 
 function routerApi(app) {
   const router = express.Router();
@@ -30,5 +31,6 @@ function routerApi(app) {
   router.use('/offices', officesRouter);
   router.use('/networks', networksRouter);
   router.use('/posts', postsRouter);
+  router.use('/lessons', lessonsRouter);
 }
 module.exports = routerApi;
