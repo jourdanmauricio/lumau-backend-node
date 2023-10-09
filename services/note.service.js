@@ -1,6 +1,8 @@
 const boom = require('@hapi/boom');
 
 const { models } = require('../libs/sequelize');
+const UserService = require('../services/user.service');
+const userService = new UserService();
 
 class NoteService {
   constructor() {}
@@ -10,8 +12,14 @@ class NoteService {
     return newNote;
   }
 
-  async find() {
-    const notes = await models.Note.findAll();
+  async find(url) {
+    const user = await userService.findByUrl(url);
+
+    if (!user) {
+      throw boom.unauthorized('web not found');
+    }
+
+    const notes = await models.Note.findAll({ where: { userId: user.id } });
     return notes;
   }
 

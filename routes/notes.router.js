@@ -18,7 +18,8 @@ router.get(
   '/',
   passport.authenticate('jwt', { session: false }),
   async (req, res) => {
-    const notes = await noteService.find();
+    const url = req.headers['url'];
+    const notes = await noteService.find(url);
     res.json(notes);
   },
 );
