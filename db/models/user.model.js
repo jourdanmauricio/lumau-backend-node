@@ -23,6 +23,15 @@ const UserSchema = {
   url: { allowNull: false, type: DataTypes.STRING(255), unique: true },
   phone: { allowNull: true, type: DataTypes.STRING(50) },
   dni: { allowNull: true, type: DataTypes.STRING(50) },
+  image: {
+    allowNull: true,
+    type: DataTypes.STRING(250),
+  },
+  altImage: {
+    field: 'alt_image',
+    allowNull: true,
+    type: DataTypes.STRING(250),
+  },
   deploy: { allowNull: false, type: DataTypes.STRING(50) },
   repo: { allowNull: true, type: DataTypes.STRING(255) },
   cloudName: {

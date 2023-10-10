@@ -10,6 +10,8 @@ const url = Joi.string().min(3).max(250);
 const repo = Joi.string().allow('').max(255);
 const phone = Joi.string().allow('').max(50);
 const dni = Joi.string().allow('').min(8);
+const image = Joi.string().allow('').max(250);
+const altImage = Joi.string().allow('').max(250);
 const deploy = Joi.string().min(3).max(50);
 const role = Joi.string().max(10);
 const username = Joi.string().max(255);
@@ -27,6 +29,8 @@ const createUserSchema = Joi.object({
   repo,
   phone,
   dni,
+  image,
+  altImage,
   deploy: deploy.required(),
   role: role.required(),
   username: username.required(),
@@ -46,6 +50,8 @@ const updateUserSchema = Joi.object({
   repo,
   phone,
   dni,
+  image,
+  altImage,
   deploy,
   role,
   username,
