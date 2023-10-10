@@ -75,12 +75,24 @@ router.get(
     try {
       const { sub } = req.user;
       const user = await userService.findOne(sub);
-      res.status(201).json(user);
+      res.status(200).json(user);
     } catch (error) {
       next(error);
     }
   },
 );
+
+router.get('/author', async (req, res, next) => {
+  try {
+    const url = req.headers['url'];
+    console.log('Route author', url);
+    const author = await userService.findAuthor(url);
+    console.log('res author', author);
+    res.status(200).json(author);
+  } catch (error) {
+    next(error);
+  }
+});
 
 /**
  * @openapi

@@ -43,6 +43,17 @@ class UserService {
     }
     return user;
   }
+  async findAuthor(url = '') {
+    const user = await models.User.findOne({
+      attributes: ['id', 'name', 'image', 'altImage'],
+      where: { url },
+    });
+    console.log('Fin user', user);
+    if (!user) {
+      throw boom.notFound('web not found');
+    }
+    return user;
+  }
 
   async findOne(id) {
     const user = await models.User.findByPk(id);
