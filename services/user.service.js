@@ -48,7 +48,6 @@ class UserService {
       attributes: ['id', 'name', 'image', 'altImage'],
       where: { url },
     });
-    console.log('Fin user', user);
     if (!user) {
       throw boom.notFound('web not found');
     }

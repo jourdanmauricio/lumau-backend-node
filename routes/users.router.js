@@ -85,9 +85,7 @@ router.get(
 router.get('/author', async (req, res, next) => {
   try {
     const url = req.headers['url'];
-    console.log('Route author', url);
     const author = await userService.findAuthor(url);
-    console.log('res author', author);
     res.status(200).json(author);
   } catch (error) {
     next(error);
@@ -252,8 +250,7 @@ router.post(
     try {
       const body = req.body;
       const user = await userService.create(body);
-      const networks = await networkService.create({ userId: user.id });
-      console.log('networks', networks);
+      await networkService.create({ userId: user.id });
       res.status(201).json(user);
     } catch (error) {
       next(error);
