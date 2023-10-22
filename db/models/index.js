@@ -11,6 +11,7 @@ const { Office, OfficeSchema } = require('./office.model');
 const { Network, NetworkSchema } = require('./network.model');
 const { Post, PostSchema } = require('./post.model');
 const { Lesson, LessonSchema } = require('./lesson.model');
+const { ProdLib, ProdLibSchema } = require('./prodLib.model');
 
 function setupModels(sequelize) {
   User.init(UserSchema, User.config(sequelize));
@@ -26,6 +27,7 @@ function setupModels(sequelize) {
   Network.init(NetworkSchema, Network.config(sequelize));
   Post.init(PostSchema, Post.config(sequelize));
   Lesson.init(LessonSchema, Lesson.config(sequelize));
+  ProdLib.init(ProdLibSchema, ProdLib.config(sequelize));
 
   User.associate(sequelize.models);
   Subscriber.associate(sequelize.models);
@@ -39,5 +41,6 @@ function setupModels(sequelize) {
   Network.associate(sequelize.models);
   Post.associate(sequelize.models);
   Lesson.associate(sequelize.models);
+  ProdLib.associate(sequelize.models);
 }
 module.exports = setupModels;

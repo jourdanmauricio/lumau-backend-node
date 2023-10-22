@@ -14,6 +14,7 @@ const officesRouter = require('./offices.router');
 const networksRouter = require('./networks.router');
 const postsRouter = require('./posts.router');
 const lessonsRouter = require('./lessons.router');
+const prodLibRouter = require('./prodLib.router');
 
 function routerApi(app) {
   const router = express.Router();
@@ -32,5 +33,6 @@ function routerApi(app) {
   router.use('/networks', networksRouter);
   router.use('/posts', postsRouter);
   router.use('/lessons', lessonsRouter);
+  router.use('/prod-lib', prodLibRouter);
 }
 module.exports = routerApi;
