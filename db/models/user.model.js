@@ -140,6 +140,10 @@ class User extends Model {
       as: 'prodLib',
       foreignKey: 'userId',
     });
+    this.hasMany(models.Slide, {
+      as: 'slide',
+      foreignKey: 'userId',
+    });
   }
 
   static config(sequelize) {
