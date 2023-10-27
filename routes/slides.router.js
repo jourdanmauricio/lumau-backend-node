@@ -62,7 +62,7 @@ router.delete(
   '/:id',
   passport.authenticate('jwt', { session: false }),
   validatorHandler(getSlideSchema, 'params'),
-  checkAuthRoute('Slide'),
+  checkAuthRoute('Slides'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
