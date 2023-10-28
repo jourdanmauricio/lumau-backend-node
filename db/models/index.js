@@ -13,6 +13,7 @@ const { Post, PostSchema } = require('./post.model');
 const { Lesson, LessonSchema } = require('./lesson.model');
 const { ProdLib, ProdLibSchema } = require('./prodLib.model');
 const { Slide, SlideSchema } = require('./slide.model');
+const { Order, OrderSchema } = require('./order.model');
 
 function setupModels(sequelize) {
   User.init(UserSchema, User.config(sequelize));
@@ -30,6 +31,7 @@ function setupModels(sequelize) {
   Lesson.init(LessonSchema, Lesson.config(sequelize));
   ProdLib.init(ProdLibSchema, ProdLib.config(sequelize));
   Slide.init(SlideSchema, Slide.config(sequelize));
+  Order.init(OrderSchema, Order.config(sequelize));
 
   User.associate(sequelize.models);
   Subscriber.associate(sequelize.models);
@@ -45,5 +47,6 @@ function setupModels(sequelize) {
   Lesson.associate(sequelize.models);
   ProdLib.associate(sequelize.models);
   Slide.associate(sequelize.models);
+  Order.associate(sequelize.models);
 }
 module.exports = setupModels;

@@ -144,6 +144,10 @@ class User extends Model {
       as: 'slide',
       foreignKey: 'userId',
     });
+    this.hasMany(models.Order, {
+      as: 'order',
+      foreignKey: 'userId',
+    });
   }
 
   static config(sequelize) {
