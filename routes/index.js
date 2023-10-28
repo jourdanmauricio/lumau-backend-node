@@ -16,7 +16,7 @@ const postsRouter = require('./posts.router');
 const lessonsRouter = require('./lessons.router');
 const prodLibRouter = require('./prodLib.router');
 const slidesRouter = require('./slides.router');
-const orderRouter = require('./order.router');
+const orderRouter = require('./orders.router');
 
 function routerApi(app) {
   const router = express.Router();
