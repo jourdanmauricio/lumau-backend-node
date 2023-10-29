@@ -7,6 +7,7 @@ const amount = Joi.number().positive();
 const payment = Joi.boolean();
 const status = Joi.string().max(20);
 const delivery = Joi.boolean();
+const observation = Joi.string().allow('');
 const deliveryInfo = Joi.array();
 
 const createOrderSchema = Joi.object({
@@ -16,6 +17,7 @@ const createOrderSchema = Joi.object({
   payment: payment.required(),
   status: status.required(),
   delivery: delivery.required(),
+  observation,
   deliveryInfo,
 });
 

@@ -3,6 +3,9 @@ const passport = require('passport');
 
 const { checkAuthRoute } = require('./../middlewares/auth.handler');
 
+const UserService = require('../services/user.service');
+const userService = new UserService();
+
 const validatorHandler = require('../middlewares/validator.handler');
 const {
   createOrderSchema,
@@ -27,16 +30,19 @@ router.get('/', async (req, res, next) => {
 
 router.post(
   '/',
-  passport.authenticate('jwt', { session: false }),
   validatorHandler(createOrderSchema, 'body'),
-  checkAuthRoute('Posts'),
-  async (req, res) => {
-    const body = req.body;
-    const { sub } = req.user;
-    body.userId = sub;
+  async (req, res, next) => {
+    try {
+      const body = req.body;
+      const { url } = req.headers;
+      const user = await userService.findByUrl(url);
+      body.userId = user.id;
 
-    const newOrder = await orderService.create(body);
-    res.status(201).json(newOrder);
+      const newOrder = await orderService.create(body);
+      res.status(201).json(newOrder);
+    } catch (error) {
+      next(error);
+    }
   },
 );
 

@@ -27,10 +27,10 @@ const OrderSchema = {
     allowNull: false,
     defaultValue: '[]',
     get() {
-      return JSON.parse(this.getDataValue('buyer'));
+      return JSON.parse(this.getDataValue('items'));
     },
     set(value) {
-      this.setDataValue('buyer', JSON.stringify(value));
+      this.setDataValue('items', JSON.stringify(value));
     },
   },
   amount: {
@@ -49,16 +49,20 @@ const OrderSchema = {
     type: DataTypes.BOOLEAN,
     allowNull: false,
   },
+  observation: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
   deliveryInfo: {
     field: 'delivery_info',
     type: DataTypes.TEXT,
     allowNull: true,
     defaultValue: '[]',
     get() {
-      return JSON.parse(this.getDataValue('buyer'));
+      return JSON.parse(this.getDataValue('deliveryInfo'));
     },
     set(value) {
-      this.setDataValue('buyer', JSON.stringify(value));
+      this.setDataValue('deliveryInfo', JSON.stringify(value));
     },
   },
   userId: {
