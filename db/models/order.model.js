@@ -7,7 +7,7 @@ const { USER_TABLE } = require('./user.model');
 const OrderSchema = {
   id: {
     allowNull: false,
-    autoIncrement: true,
+    // autoIncrement: true,
     primaryKey: true,
     type: DataTypes.INTEGER,
   },

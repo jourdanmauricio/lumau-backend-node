@@ -37,6 +37,8 @@ router.post(
       const { url } = req.headers;
       const user = await userService.findByUrl(url);
       body.userId = user.id;
+      body.email = user.email;
+      body.url = url;
 
       const newOrder = await orderService.create(body);
       res.status(201).json(newOrder);

@@ -11,6 +11,7 @@ const observation = Joi.string().allow('');
 const deliveryInfo = Joi.array();
 
 const createOrderSchema = Joi.object({
+  id: id.required(),
   buyer: buyer.required(),
   items: items.required(),
   amount: amount.required(),
