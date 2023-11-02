@@ -1,5 +1,6 @@
 const boom = require('@hapi/boom');
 const { models } = require('../libs/sequelize');
+const cloudinary = require('cloudinary');
 
 const UserService = require('../services/user.service');
 const userService = new UserService();
@@ -35,10 +36,28 @@ class ImageService {
     return rta;
   }
 
-  async delete(id) {
-    const image = await this.findOne(id);
-    await image.destroy();
-    return { id };
+  async delete(id, userId) {
+    const user = await userService.findOne(userId);
+
+    cloudinary.config({
+      cloud_name: user.cloudName,
+      api_key: user.cloudApiKey,
+      api_secret: user.cloudSecret,
+    });
+
+    cloudinary.v2.uploader.destroy('libreriaalfaweb/' + id, (error, result) => {
+      if (error) {
+        console.log('ERRRORRR', error);
+        //        throw 'Error Cloudinary';
+      } else {
+        console.log('Imagen eliminada exitosamente:', result);
+      }
+    });
+    return 'libreriaalfaweb/' + id;
+
+    // cloudinary.v2.uploader
+    //   .destroy('libreriaalfaweb/' + id)
+    //   .then((result) => console.log(result));
   }
 }
 

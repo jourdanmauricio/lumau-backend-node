@@ -19,6 +19,7 @@ const cloudName = Joi.string().allow('').max(100);
 const cloudFolder = Joi.string().allow('').max(100);
 const cloudApiKey = Joi.string().allow('').max(100);
 const cloudPreset = Joi.string().allow('').max(100);
+const cloudSecret = Joi.string().allow('').max(50);
 
 const createUserSchema = Joi.object({
   name: name.required(),
@@ -38,6 +39,7 @@ const createUserSchema = Joi.object({
   cloudFolder,
   cloudApiKey,
   cloudPreset,
+  cloudSecret,
 });
 
 const updateUserSchema = Joi.object({
@@ -59,6 +61,7 @@ const updateUserSchema = Joi.object({
   cloudFolder,
   cloudApiKey,
   cloudPreset,
+  cloudSecret,
 });
 
 const getUserSchema = Joi.object({

@@ -79,12 +79,16 @@ router.put(
 router.delete(
   '/:id',
   passport.authenticate('jwt', { session: false }),
-  validatorHandler(getImageSchema, 'params'),
+  // validatorHandler(getImageSchema, 'params'),
   checkAuthRoute('Imágenes'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
-      const rta = await imageService.delete(id);
+      const { sub } = req.user;
+      const userId = sub;
+
+      const rta = await imageService.delete(id, userId);
+      console.log('rta', rta);
       res.json(rta);
     } catch (error) {
       next(error);

@@ -54,6 +54,11 @@ const UserSchema = {
     allowNull: true,
     type: DataTypes.STRING(100),
   },
+  cloudSecret: {
+    field: 'cloud_secret',
+    allowNull: true,
+    type: DataTypes.STRING(50),
+  },
   attributes: {
     type: DataTypes.TEXT,
     allowNull: true,

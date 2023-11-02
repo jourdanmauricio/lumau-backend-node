@@ -5,6 +5,8 @@ const routerApi = require('./routes');
 const { checkApiKey } = require('./middlewares/auth.handler');
 const { swaggerDocs: v1SwaggerDocs } = require('./routes/swagger');
 const { config } = require('./config/config');
+var bodyParser = require('body-parser');
+const path = require('path');
 
 const {
   logErrors,
@@ -15,6 +17,12 @@ const {
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+// HERE WE WILL LET OUR APP TO GET ACCESS TO THE STATIC FOLDERS LIKE CSS, IMAGES.
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static('uploads'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.use(express.json());
 app.use(cors());
@@ -38,7 +46,6 @@ app.use(passport.initialize());
 //   },
 // };
 // app.use(cors(options));
-
 
 routerApi(app);
 
