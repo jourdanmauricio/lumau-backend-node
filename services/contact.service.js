@@ -14,7 +14,7 @@ class ContactService {
     await transporter.sendMail({
       from: `"Formulario de Contacto 👻" <${config.emailSend}>`,
       // to: config.emailTo,
-      to: data.email,
+      to: data.emailTo,
       subject: `Nuevo Mesanje de contacto recibido en ${data.url} ✔`,
       html: `
         <h2 style='text-align: center;'>Tienes un nuevo mensaje de contacto!</h2>
