@@ -45,6 +45,10 @@ const OrderSchema = {
     allowNull: false,
     type: DataTypes.ENUM(['active', 'finalized']),
   },
+  type: {
+    allowNull: false,
+    type: DataTypes.ENUM(['products', 'print']),
+  },
   delivery: {
     type: DataTypes.BOOLEAN,
     allowNull: false,

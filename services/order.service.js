@@ -1,4 +1,5 @@
 const boom = require('@hapi/boom');
+const fs = require('fs');
 const { models } = require('../libs/sequelize');
 
 const { transporter } = require('../config/mailer');
@@ -109,6 +110,98 @@ class OrderService {
     return newOrder;
   }
 
+  async createPrint(data, attachments) {
+    const newOrder = await models.Order.create(data);
+
+    const buyer = `
+        <p>Nombre: ${newOrder.buyer[0].name}</p>
+        <p>Email: ${newOrder.buyer[0].email}</p>
+        <p>DNI: ${newOrder.buyer[0].dni}</p>
+        <p>Teléfono: ${newOrder.buyer[0].phone}</p>
+        <p>Fecha de compra: ${newOrder.createdAt}</p>
+        <p>Observación: ${newOrder.observation}</p>`;
+
+    const styles = `
+      <style>
+        body {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        h2 {
+          text-align: left;
+        }
+        th, td {
+          padding: 15px;
+          text-align: left;
+          border-bottom: 1px solid #ddd;
+        }
+        tr:nth-child(even) {
+          background-color: #f2f2f2;
+        }
+        th {
+          background-color: #f98b24;
+          color: white;
+        }
+        </style>`;
+
+    let html = `<html><head><title>Tabla de Datos</title>`;
+
+    html += styles;
+    html += `
+      </head>
+      <body>
+        <h2>Pedido de impresión nro: ${newOrder.id}</h2>`;
+    html += buyer;
+    html += `
+        <table>
+          <thead>
+            <tr>
+              <th>Archivo</th>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Tamaño</th>
+            </tr>
+          </thead>
+          <tbody>`;
+
+    newOrder.items.forEach((item) => {
+      html += `
+        <tr>
+          <td>${item.id}</td>
+          <td>${item.name}</td>
+          <td>${item.type}</td>
+          <td>${item.size}</td>
+        </tr>`;
+    });
+
+    html += '</tbody></table></body></html>';
+
+    const mailOptions = {
+      from: `Nuevo Pedido 📖 <${data.url}>`,
+      to: data.email,
+      attachments: attachments,
+      subject: `Nuevo Pedido de impresión ${newOrder.id} ✔`,
+      html: html,
+    };
+    await transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Correo enviado: ' + info.response);
+
+        attachments.forEach((file) => {
+          fs.unlink(file.path, (err) => {
+            if (err) {
+              throw err;
+            }
+          });
+        });
+      }
+    });
+
+    return newOrder;
+  }
   async find(url = '') {
     const user = await userService.findByUrl(url);
 

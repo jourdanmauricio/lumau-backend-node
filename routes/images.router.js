@@ -88,7 +88,6 @@ router.delete(
       const userId = sub;
 
       const rta = await imageService.delete(id, userId);
-      console.log('rta', rta);
       res.json(rta);
     } catch (error) {
       next(error);

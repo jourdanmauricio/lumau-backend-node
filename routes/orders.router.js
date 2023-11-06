@@ -1,6 +1,28 @@
 const express = require('express');
 const passport = require('passport');
 
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+  // destination: './public/data/uploads/',
+  destination: function (req, file, cb) {
+    // console.log('req', req.body.dni);
+    // const path = `./public/data/uploads/${req.body.dni}/`;
+    const path = './public/data/uploads/';
+    // cb(null, `./public/data/uploads/${req.body.dni}/`);
+    cb(null, path);
+  },
+  filename: (req, file, cb) => {
+    // console.log('UPLOAD', file.originalname);
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
+// const upload = multer({ dest: './public/data/uploads/' });
+
+// const uploadFiles = require('../middlewares/multer');
+
 const { checkAuthRoute } = require('./../middlewares/auth.handler');
 
 const UserService = require('../services/user.service');
@@ -28,6 +50,58 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+router.post('/prints', upload.array('input-file'), async (req, res, next) => {
+  try {
+    const files = req.files;
+    const body = req.body;
+
+    const filesDetail = files.map((file, index) => ({
+      id: index + 1,
+      name: file.originalname,
+      type: file.mimetype,
+      size: file.size,
+    }));
+
+    const attachments = files.map((file) => ({
+      name: file.originalname,
+      path: file.path,
+      //contentDisposition: 'inline',
+    }));
+
+    const obj = {
+      id: new Date().valueOf(),
+      buyer: [
+        {
+          name: body.name,
+          dni: body.dni,
+          email: body.email,
+          phone: body.phone,
+        },
+      ],
+      items: filesDetail,
+      delivery: false,
+      observation: body.observation,
+      amount: 1,
+      type: 'print',
+      status: 'active',
+      payment: false,
+    };
+
+    const { url } = req.headers;
+    const user = await userService.findByUrl(url);
+    obj.userId = user.id;
+    obj.email = user.email;
+    obj.url = url;
+
+    const newOrder = await orderService.createPrint(obj, attachments);
+
+    // res.status(201).json({ Ok: 'ok' });
+    res.status(201).json(newOrder);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.post(
   '/',
   validatorHandler(createOrderSchema, 'body'),
@@ -39,6 +113,7 @@ router.post(
       body.userId = user.id;
       body.email = user.email;
       body.url = url;
+      body.type = 'products';
 
       const newOrder = await orderService.create(body);
       res.status(201).json(newOrder);
