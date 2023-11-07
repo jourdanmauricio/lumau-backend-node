@@ -148,7 +148,7 @@ class AuthService {
   }
 
   async changeAuthInstagram(userId, body) {
-    console.log('userId', userId, 'body.userId', body.userId);
+    console.log('userId', typeof userId, 'body.userId', typeof body.userId);
     if (userId !== body.userId) {
       throw boom.unauthorized('Unauthorized');
     }
