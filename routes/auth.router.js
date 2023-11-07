@@ -1,11 +1,13 @@
 const express = require('express');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
+const axios = require('axios');
 
 const AuthService = require('./../services/auth.service');
 const authService = new AuthService();
 
 const { config } = require('./../config/config');
+const { JSON } = require('sequelize');
 const router = express.Router();
 
 /**
@@ -112,5 +114,27 @@ router.post(
     }
   },
 );
-module.exports = router;
+
+router.post('/auth-instagram', async (req, res, next) => {
+  console.log('request', req.body);
+
+  try {
+    const url = config.urlChangeTokenFaceDev;
+
+    const changeToken = {
+      client_id: config.clientFaceDev,
+      client_secret: config.secretFaceDev,
+      grant_type: 'authorization_code',
+      redirect_uri: config.redirectUriFaceDev,
+      code: req.body.code,
+    };
+    console.log('changeToken', changeToken);
+    const resp = await axios.post(url, changeToken);
+    console.log('response', resp);
+    res.status(200).json(req.body);
+  } catch (error) {
+    console.log('ERRRRRRRRRRRRRRR', error.response);
+    next(error);
+  }
+});
 module.exports = router;

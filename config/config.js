@@ -38,6 +38,11 @@ const config = {
   emailSecure: process.env.EMAIL_SECURE,
   emailSendPass: process.env.EMAIL_SEND_PASS,
   emailTo: process.env.EMAIL_TO,
+
+  secretFaceDev: process.env.SECRET_FACE_DEV,
+  clientFaceDev: process.env.CLIENT_FACE_DEV,
+  redirectUriFaceDev: process.env.REDIRECT_URI_FACE_DEV,
+  urlChangeTokenFaceDev: process.env.URL_CHANGE_TOKEN_FACE_DEV,
 };
 
 module.exports = { config };
