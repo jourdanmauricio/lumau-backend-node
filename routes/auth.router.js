@@ -2,6 +2,7 @@ const express = require('express');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
+const FormData = require('form-data');
 
 const AuthService = require('./../services/auth.service');
 const authService = new AuthService();
@@ -121,15 +122,25 @@ router.post('/auth-instagram', async (req, res, next) => {
   try {
     const url = config.urlChangeTokenFaceDev;
 
-    const changeToken = {
-      client_id: config.clientFaceDev,
-      client_secret: config.secretFaceDev,
-      grant_type: 'authorization_code',
-      redirect_uri: config.redirectUriFaceDev,
-      code: req.body.code,
-    };
-    console.log('changeToken', changeToken);
-    const resp = await axios.post(url, changeToken);
+    const data = new FormData();
+
+    // Agrega los campos del formulario desde req.body u otras fuentes
+    data.append('client_id', config.clientFaceDev);
+    data.append('client_secret', config.secretFaceDev);
+    data.append('grant_type', 'authorization_code');
+    data.append('redirect_uri', config.redirectUriFaceDev);
+    data.append('code', req.body.code);
+
+    // const changeToken = {
+    //   client_id: config.clientFaceDev,
+    //   client_secret: config.secretFaceDev,
+    //   grant_type: 'authorization_code',
+    //   redirect_uri: config.redirectUriFaceDev,
+    //   code: req.body.code,
+    // };
+    console.log('changeToken', data);
+    // const resp = await axios.post(url, changeToken, {headers: Content-Type" como "multipart/form-data"});
+    const resp = await axios.post(url, data);
     console.log('response', resp);
     res.status(200).json(req.body);
   } catch (error) {
