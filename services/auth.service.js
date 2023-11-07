@@ -163,6 +163,8 @@ class AuthService {
 
     const resp = await axios.post(url, data);
 
+    console.log('resp.data.access_token', resp.data.access_token);
+
     await userService.update(userId, {
       instagramToken: resp.data.access_token,
       instagramUser: resp.data.user_id,
