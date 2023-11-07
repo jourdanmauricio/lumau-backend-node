@@ -148,8 +148,8 @@ class AuthService {
   }
 
   async changeAuthInstagram(userId, body) {
-    console.log('userId', userId, 'body.state', body.state);
-    if (userId !== body.state) {
+    console.log('userId', userId, 'body.userId', body.userId);
+    if (userId !== body.userId) {
       throw boom.unauthorized('Unauthorized');
     }
     const url = config.urlChangeTokenFaceDev;
