@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const fetch = require('node-fetch');
+const axios = require('axios');
+const FormData = require('form-data');
 
 const { config } = require('../config/config');
 
@@ -143,6 +145,30 @@ class AuthService {
 
     if (resp.status !== 204) throw boom.conflict('Error regenerando la página');
     return resp;
+  }
+
+  async changeAuthInstagram(userId, body) {
+    if (userId !== body.state) {
+      throw boom.unauthorized('Unauthorized');
+    }
+    const url = config.urlChangeTokenFaceDev;
+    const data = new FormData();
+
+    // Agrega los campos del formulario desde req.body u otras fuentes
+    data.append('client_id', config.clientFaceDev);
+    data.append('client_secret', config.secretFaceDev);
+    data.append('grant_type', 'authorization_code');
+    data.append('redirect_uri', config.redirectUriFaceDev);
+    data.append('code', body.code);
+
+    const resp = await axios.post(url, data);
+
+    await userService.update(userId, {
+      instagramToken: resp.data.access_token,
+      instagramUser: resp.data.user_id,
+    });
+
+    return { message: 'Auth Instagram changed' };
   }
 }
 

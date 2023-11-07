@@ -59,6 +59,16 @@ const UserSchema = {
     allowNull: true,
     type: DataTypes.STRING(50),
   },
+  instagramToken: {
+    field: 'instagram_token',
+    allowNull: true,
+    type: DataTypes.STRING(),
+  },
+  instagramUser: {
+    field: 'instagram_user',
+    allowNull: true,
+    type: DataTypes.STRING(),
+  },
   attributes: {
     type: DataTypes.TEXT,
     allowNull: true,
