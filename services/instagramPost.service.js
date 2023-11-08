@@ -18,13 +18,13 @@ class InstagramPostService {
       throw boom.unauthorized('web not found');
     }
 
-    console.log('user', user);
-    const instaUrl = `https://graph.instagram.com/me/media?fields=thumbnail_url,media_url,caption,permalink&limit=20&access_token=${user.instagramToken}`;
+    // console.log('user', user.instagramToken);
+    const instaUrl = `https://graph.instagram.com/me/media?fields=id,thumbnail_url,media_url,caption,permalink&limit=10&access_token=${user.instagramToken}`;
 
     const resp = await axios(instaUrl);
-    console.log('resp', resp);
+    console.log('resp', resp.data);
 
-    return resp;
+    return resp.data;
     // const posts = await models.Post.findAll({ where: { userId: user.id } });
     // return posts;
   }
