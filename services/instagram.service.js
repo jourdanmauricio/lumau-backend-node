@@ -1,6 +1,7 @@
 const boom = require('@hapi/boom');
 const { models } = require('../libs/sequelize');
 const axios = require('axios');
+const FormData = require('form-data');
 
 const UserService = require('./user.service');
 const { config } = require('../config/config');
