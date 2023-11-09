@@ -113,19 +113,4 @@ router.post(
   },
 );
 
-router.post(
-  '/auth-instagram',
-  passport.authenticate('jwt', { session: false }),
-  async (req, res, next) => {
-    try {
-      const { sub } = req.user;
-      const body = req.body;
-      const rta = await authService.changeAuthInstagram(sub, body);
-
-      res.status(200).json(rta);
-    } catch (error) {
-      next(error);
-    }
-  },
-);
 module.exports = router;
