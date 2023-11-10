@@ -18,24 +18,6 @@ router.get('/', async (req, res, next) => {
 });
 
 router.post(
-  '/changeAuthInstagram',
-  passport.authenticate('jwt', { session: false }),
-  // validatorHandler(createPostSchema, 'body'),
-  checkAuthRoute('Instagram'),
-  async (req, res, next) => {
-    try {
-      const body = req.body;
-      const { sub } = req.user;
-
-      const rta = await instagramService.changeAuthInstagram(sub, body);
-      res.status(201).json(rta);
-    } catch (error) {
-      next(error);
-    }
-  },
-);
-
-router.post(
   '/',
   passport.authenticate('jwt', { session: false }),
   // validatorHandler(createPostSchema, 'body'),
