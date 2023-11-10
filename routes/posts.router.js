@@ -58,6 +58,23 @@ router.put(
   },
 );
 
+router.post(
+  '/import-instagram',
+  passport.authenticate('jwt', { session: false }),
+  // validatorHandler(createPostSchema, 'body'),
+  checkAuthRoute('Instagram'),
+  async (req, res, next) => {
+    try {
+      const { sub } = req.user;
+
+      const rta = await postService.importInstagram(sub);
+      res.status(201).json(rta);
+    } catch (error) {
+      next(error);
+    }
+  },
+);
+
 router.delete(
   '/:id',
   passport.authenticate('jwt', { session: false }),

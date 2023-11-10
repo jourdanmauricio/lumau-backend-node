@@ -116,8 +116,6 @@ router.post(
 router.post(
   '/changeAuthInstagram',
   passport.authenticate('jwt', { session: false }),
-  // validatorHandler(createPostSchema, 'body'),
-  // checkAuthRoute('Instagram'),
   async (req, res, next) => {
     try {
       const body = req.body;

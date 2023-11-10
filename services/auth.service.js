@@ -147,15 +147,12 @@ class AuthService {
   }
 
   async changeAuthInstagram(userId, body) {
-    console.log('USERS', userId, body);
-    console.log('USERS TYPE', typeof userId, typeof body.state);
     if (userId !== parseInt(body.userId)) {
       throw boom.unauthorized('Unauthorized');
     }
     const url = config.urlChangeTokenFaceDev;
     const data = new FormData();
 
-    // Agrega los campos del formulario desde req.body u otras fuentes
     data.append('client_id', config.clientFaceDev);
     data.append('client_secret', config.secretFaceDev);
     data.append('grant_type', 'authorization_code');
