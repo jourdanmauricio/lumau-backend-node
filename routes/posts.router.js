@@ -62,7 +62,7 @@ router.post(
   '/import-instagram',
   passport.authenticate('jwt', { session: false }),
   // validatorHandler(createPostSchema, 'body'),
-  checkAuthRoute('Instagram'),
+  checkAuthRoute('Posts'),
   async (req, res, next) => {
     try {
       const { sub } = req.user;
